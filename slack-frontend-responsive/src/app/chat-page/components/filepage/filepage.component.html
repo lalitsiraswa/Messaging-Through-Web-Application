@@ -1,0 +1,31 @@
+<div class="files">
+  <div class="file-container" *ngFor="let file of files">
+    <div class="file-content">
+      <div class="file-info">
+        <span class="span">File Name : {{ file.fileName }}</span>
+        <span>File Owner : {{ file.fileOwner }}</span>
+        <span>Time : {{ toDate(file.timeStamp) }}</span>
+      </div>
+      <div class="file-icon"><i class="fa-solid fa-file fa-2xl"></i></div>
+    </div>
+    <div class="file-actions">
+      <button
+        class="download"
+        mat-raised-button
+        color="primary"
+        (click)="selectFile(file, 'download')"
+      >
+        Downolad
+      </button>
+      <button
+        *ngIf="file.fileOwner === currentUser"
+        class="delete"
+        mat-raised-button
+        color="warn"
+        (click)="selectFile(file, 'delete')"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+</div>

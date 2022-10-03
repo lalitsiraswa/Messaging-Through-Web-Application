@@ -1,0 +1,41 @@
+<div class="pages-section">
+  <div class="heading">
+    <h3>Add User</h3>
+  </div>
+  <div class="header">
+    <form>
+      <div class="form-holder">
+        <div class="form-input">
+          <input
+            type="search"
+            name="usersearch"
+            placeholder="Search..."
+            [(ngModel)]="searchTerm"
+            (keyup)="onKeySearch($event)"
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="list">
+    <div>
+      <ol class="gradient-list">
+        <div *ngFor="let user of searchedUsers">
+          <li id="{{ user.username }}">
+            <div class="channelselector">
+              <i class="fa-solid fa-user"></i>{{ user.username }}
+            </div>
+            <div class="invite-button">
+              <div
+                matTooltip="Add User!!"
+                (click)="userStatus(user.username, 'add')"
+              >
+                <i class="fa-solid fa-plus"></i>
+              </div>
+            </div>
+          </li>
+        </div>
+      </ol>
+    </div>
+  </div>
+</div>

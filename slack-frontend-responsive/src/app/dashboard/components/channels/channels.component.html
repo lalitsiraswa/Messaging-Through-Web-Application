@@ -1,0 +1,46 @@
+<div class="container">
+  <table class="content-table">
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>Channel's Name</th>
+        <th>Active/Deactive</th>
+      </tr>
+    </thead>
+    <tbody class="list">
+      <tr *ngFor="let channel of showList; index as idx">
+        <td>{{ idx + 1 }}</td>
+        <td>{{ channel.name }}</td>
+        <td>
+          <mat-slide-toggle
+            [(ngModel)]="channel.isActive"
+            (click)="something(channel)"
+          ></mat-slide-toggle>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="btn-container">
+  <div class="next-previous-btn">
+    <div class="previous-page">
+      <button
+        (click)="listContent('backward')"
+        mat-icon-button
+        aria-label="Example icon button with a vertical three dot icon"
+      >
+        <mat-icon>fast_rewind</mat-icon>
+      </button>
+    </div>
+    <div class="next-page">
+      <button
+        (click)="listContent('forward')"
+        mat-icon-button
+        aria-label="Example icon button with a vertical three dot icon"
+      >
+        <mat-icon>fast_forward</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

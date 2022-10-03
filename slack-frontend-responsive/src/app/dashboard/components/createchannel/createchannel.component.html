@@ -1,0 +1,31 @@
+<div class="createchannel">
+  <h3>Create Channel</h3>
+  <form
+    action="#"
+    id="contact_form"
+    class="contact-form contact-grid"
+    [formGroup]="channelForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="form-field name">
+      <label class="label" for="fname">channel name *</label>
+      <input id="fname" type="text" formControlName="channelName" />
+    </div>
+
+    <!-- <div class="form-field email">
+      <label class="label" for="email">avatar url </label>
+      <input id="email" type="email" formControlName="avatarUrl" />
+    </div> -->
+
+    <div class="form-field phone">
+      <label class="label" for="description">description *</label>
+      <input id="description" type="text" formControlName="description" />
+    </div>
+
+    <div class="submit-button">
+      <button id="submit-btn" class="btn" type="submit" value="submit">
+        submit
+      </button>
+    </div>
+  </form>
+</div>

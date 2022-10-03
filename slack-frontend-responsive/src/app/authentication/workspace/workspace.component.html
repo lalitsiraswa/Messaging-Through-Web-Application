@@ -1,0 +1,35 @@
+<div class="page">
+  <div class="bar errormessage" *ngIf="message">
+    <div class="close" (click)="removeErrorMessage()">X</div>
+    <i class="ico" (click)="removeErrorMessage()">&#9747;</i> {{ message }}
+  </div>
+
+  <div class="center">
+    <h4>Create Workspace</h4>
+    <form [formGroup]="FormControl" (ngSubmit)="onSubmit()">
+      <div class="txt_field">
+        <input type="text" id="workspacename" formControlName="workspacename" />
+        <span
+          ><small
+            class="error"
+            *ngIf="workspacename?.touched && workspacename?.invalid"
+            >Enter Valid Workspace name</small
+          ></span
+        >
+        <label for="workspacename">Workspace Name</label>
+      </div>
+
+      <input
+        type="submit"
+        [disabled]="FormControl.invalid"
+        value="Create Workspace"
+      />
+
+      <div class="forget-password">
+        <a class="fpassword" [routerLink]="['../login']"></a>
+      </div>
+
+      <div class="signup_link" id="log" (click)="logOut()"><a>Log Out</a></div>
+    </form>
+  </div>
+</div>

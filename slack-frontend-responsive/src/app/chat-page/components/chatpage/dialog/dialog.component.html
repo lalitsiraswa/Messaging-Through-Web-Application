@@ -1,0 +1,57 @@
+<!-- <angular-file-uploader
+      [config]="afuConfig">
+</angular-file-uploader> -->
+
+<input
+  type="file"
+  #file
+  style="display: none"
+  (change)="onFilesAdded($event)"
+  multiple
+/>
+
+<div class="container" fxLayout="column" fxLayoutAlign="space-evenly stretch">
+  <h3 mat-dialog-title>Upload File</h3>
+  <div class="file-add-button">
+    <button
+      [disabled]="uploading || uploadSuccessful"
+      mat-raised-button
+      class="add-files-btn"
+      (click)="addFiles()"
+    >
+      Add File
+    </button>
+  </div>
+  <mat-progress-bar mode="determinate" value="{{ val }}"></mat-progress-bar>
+
+  <div class="file-name">
+    <span>{{
+      fileEvent
+        ? fileEvent.target.files[0].name
+        : "Please select file to upload!!"
+    }}</span>
+  </div>
+
+  <!-- This are the actions of the dialog, containing the primary and the cancel button-->
+  <mat-dialog-actions class="actions">
+    <button
+      class="cancel-btn"
+      color="warn"
+      *ngIf="showCancelButton"
+      mat-raised-button
+      mat-dialog-close
+    >
+      Cancel
+    </button>
+    <button
+      class="upload-btn"
+      mat-raised-button
+      color="primary"
+      [disabled]="!canBeClosed"
+      (click)="closeDialog()"
+      *ngIf="uploadButton"
+    >
+      Upload
+    </button>
+  </mat-dialog-actions>
+</div>

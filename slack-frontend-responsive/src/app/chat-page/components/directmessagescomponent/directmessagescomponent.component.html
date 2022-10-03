@@ -1,0 +1,95 @@
+<div class="pages-section">
+  <div class="list">
+    <div>
+      <mat-list *ngFor="let user of usersList">
+        <div
+          class="user-list-content"
+          [ngClass]="
+            user.username === selectedUserName
+              ? 'activate-class'
+              : 'deactivate-class'
+          "
+        >
+          <mat-list-item (click)="openChat(user)">
+            <div class="name-icon">
+              <div class="profile-icon">
+                <igx-avatar
+                  initials="{{ this.user.username[0].toUpperCase() }}"
+                  size="small"
+                  [roundShape]="true"
+                ></igx-avatar>
+              </div>
+              <div class="user-name">
+                {{ this.user.username }}
+              </div>
+            </div>
+            <div
+              class="notification-icon private-notification-icon"
+              style="color: Dodgerblue"
+            >
+              <!-- <i matTooltip="Notification" class="fa-solid fa-bell fa-lg fa-lg"></i> -->
+              <button
+                type="button"
+                class="icon-button"
+                style="background-color: #ecf3ff; border: none"
+                [matMenuTriggerFor]="menu"
+              >
+                <i
+                  matTooltip="Notification"
+                  class="fa-solid fa-message fa-xl"
+                  style="color: Dodgerblue; border: none"
+                ></i>
+
+                <!-- <i
+                matTooltip="Notification"
+                class="fa-solid fa-bell fa-xl"
+                style="color: Dodgerblue"
+              ></i> -->
+
+                <!-- <i
+                class="fa fa-bell fa-border fa-xl badge"
+                style="color: dodgerblue; border: none"
+              ></i> -->
+                <span class="icon-button__badge">{{ noticount }}</span>
+              </button>
+              <!-- </a> -->
+            </div>
+            <div>
+              <mat-menu #menu="matMenu">
+                <mat-list
+                  role="list"
+                  *ngFor="let notification of notifications"
+                >
+                  <mat-list-item
+                    role="listitem"
+                    *ngIf="notification.count"
+                    (click)="
+                      selectFromNoti(
+                        notification.chatName,
+                        notification.chatName.indexOf('@') === -1 ? true : false
+                      )
+                    "
+                  >
+                    Channel :
+                    {{
+                      notification.chatName.substr(
+                        0,
+                        notification.chatName.indexOf("@") !== -1
+                          ? notification.chatName.indexOf("@")
+                          : notification.chatName.length
+                      )
+                    }}, Unread : {{ notification.count }}
+                  </mat-list-item>
+                </mat-list>
+              </mat-menu>
+            </div>
+            <!-- <div class="private-notification-icon">
+              <i class="fa-solid fa-message fa-lg"></i>
+            </div> -->
+          </mat-list-item>
+        </div>
+        <mat-divider></mat-divider>
+      </mat-list>
+    </div>
+  </div>
+</div>

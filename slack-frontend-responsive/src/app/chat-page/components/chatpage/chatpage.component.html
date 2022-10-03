@@ -1,0 +1,279 @@
+<div class="main-data" *ngIf="channelName">
+  <div class="pop-up-msg" *ngIf="isUserRemoved">
+    <div class="msg-content">You have been removed from the channel.</div>
+  </div>
+  <div *ngIf="!isUserRemoved" class="chat-section">
+    <div class="head">
+      <div class="cont">
+        <div class="avatar-x">
+          <igx-avatar
+            *ngIf="channelName"
+            initials="{{ channelName[0].toUpperCase() }}"
+            size="small"
+            [roundShape]="true"
+          ></igx-avatar>
+        </div>
+        <div class="channelName">
+          <h4
+            [matTooltip]="
+              description.length
+                ? description.toString()
+                : 'Description not provided!!'
+            "
+            *ngIf="channelName"
+          >
+            {{ channelName }}
+          </h4>
+          <span *ngIf="isPrivateChat" class="user-status">{{
+            isActive ? "online" : "offline"
+          }}</span>
+          <!-- <span *ngIf="!isPrivateChat" class="user-status">{{
+            description
+          }}</span> -->
+        </div>
+      </div>
+      <div class="three-dots">
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+          aria-label="Example icon-button with a menu"
+        >
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="goToFilePage()" *ngIf="!filePage">
+            <mat-icon>book</mat-icon>
+            <span>File Page</span>
+          </button>
+          <button mat-menu-item (click)="goToInfoPage()" *ngIf="!infoPage">
+            <mat-icon>info</mat-icon>
+            <span>Info Page</span>
+          </button>
+          <button mat-menu-item (click)="goToChatPage()" *ngIf="!chatPage">
+            <mat-icon>assignment</mat-icon>
+            <span>Chat Page</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+    <div class="chats" *ngIf="chatPage">
+      <div>
+        <div
+          class="msg-page"
+          #chats
+          scrollable
+          (scrollPosition)="scrollHandler($event)"
+          infiniteScroll
+          [infiniteScrollDistance]="2"
+          [infiniteScrollUpDistance]="0.1"
+          [infiniteScrollThrottle]="50"
+          [scrollWindow]="false"
+          [alwaysCallback]="true"
+          (scrolledUp)="onScrollUp()"
+        >
+          <div class="loadingspinner" *ngIf="isLoading">
+            <div class="spinner"><i></i></div>
+          </div>
+
+          <div *ngFor="let message of allMessages">
+            <!-- <div *ngIf="message.extension === 'txt'"> -->
+            <div
+              class="recived-chat"
+              *ngIf="
+                message.sender !== username && message.fileOwner !== username
+              "
+            >
+              <div class="recived-msg">
+                <div class="recived-msg-inbox">
+                  <div class="time">
+                    {{
+                      message.extension === "txt"
+                        ? message.sender
+                        : message.fileOwner
+                    }}
+                    <span>{{ toDate(message.timeStamp) }}</span>
+                  </div>
+                  <div *ngIf="message.extension === 'txt'">
+                    {{ message.textMessage }}
+                  </div>
+                  <div *ngIf="message.extension === 'jpg'">
+                    <img
+                      src="{{
+                        'https://kloudchat.s3.ap-south-1.amazonaws.com/' +
+                          message.fileKey
+                      }}"
+                    />
+                  </div>
+                  <div *ngIf="message.extension === 'mp4'">
+                    <video
+                      width="320"
+                      height="240"
+                      controls
+                      src="{{
+                        'https://kloudchat.s3.ap-south-1.amazonaws.com/' +
+                          message.fileKey
+                      }}"
+                    >
+                      <source
+                        src="{{
+                          'https://kloudchat.s3.ap-south-1.amazonaws.com/' +
+                            message.fileKey
+                        }}"
+                      />
+                    </video>
+                  </div>
+                  <div *ngIf="message.extension === 'mp3'">
+                    <audio controls>
+                      <source
+                        src="{{
+                          'https://kloudchat.s3.ap-south-1.amazonaws.com/' +
+                            message.fileKey
+                        }}"
+                      />
+                    </audio>
+                  </div>
+                  <div
+                    *ngIf="
+                      message.extension !== 'mp4' &&
+                      message.extension !== 'jpg' &&
+                      message.extension !== 'txt' &&
+                      message.extension !== 'mp3'
+                    "
+                  >
+                    <i class="fa-solid fa-file fa-4x"></i>
+                    <button
+                      mat-raised-button
+                      color="primary"
+                      (click)="downloadFile(message)"
+                    >
+                      Download
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="outgoing-chat"
+              *ngIf="
+                message.sender === username || message.fileOwner === username
+              "
+            >
+              <div class="outgoing-chat"></div>
+              <div class="outgoing-chat-msg">
+                <div class="time">
+                  {{
+                    message.extension === "txt"
+                      ? message.sender
+                      : message.fileOwner
+                  }}
+                  <span>{{ toDate(message.timeStamp) }}</span>
+                </div>
+                <div *ngIf="message.extension === 'txt'">
+                  {{ message.textMessage }}
+                </div>
+                <div
+                  *ngIf="
+                    message.extension === 'jpg' ||
+                    message.extension === 'jpeg' ||
+                    message.extension === 'png' ||
+                    message.extension === 'gif'
+                  "
+                >
+                  <img
+                    src="{{
+                      'https://kloudchat.s3.ap-south-1.amazonaws.com/' +
+                        message.fileKey
+                    }}"
+                  />
+                </div>
+                <div *ngIf="message.extension === 'mp4'">
+                  <video
+                    width="320"
+                    height="240"
+                    controls
+                    src="{{
+                      'https://kloudchat.s3.ap-south-1.amazonaws.com/' +
+                        message.fileKey
+                    }}"
+                  >
+                    <source
+                      src="{{
+                        'https://kloudchat.s3.ap-south-1.amazonaws.com/' +
+                          message.fileKey
+                      }}"
+                    />
+                  </video>
+                </div>
+                <div *ngIf="message.extension === 'mp3'">
+                  <audio controls>
+                    <source
+                      src="{{
+                        'https://kloudchat.s3.ap-south-1.amazonaws.com/' +
+                          message.fileKey
+                      }}"
+                    />
+                  </audio>
+                </div>
+                <div
+                  *ngIf="
+                    message.extension !== 'mp4' &&
+                    message.extension !== 'jpg' &&
+                    message.extension !== 'txt' &&
+                    message.extension !== 'mp3' &&
+                    message.extension !== 'jpeg' &&
+                    message.extension !== 'png' &&
+                    message.extension !== 'gif'
+                  "
+                >
+                  <i class="fa-solid fa-file fa-4x"></i>
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    (click)="downloadFile(message)"
+                  >
+                    Download
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="chatPage" class="send-message">
+      <form>
+        <div class="form-input">
+          <div class="options">
+            <input (click)="openDialog()" id="files" />
+            <label for="files"><mat-icon> attach_file</mat-icon></label>
+          </div>
+          <input
+            type="search"
+            name="input-message"
+            placeholder="Type your message..."
+            class="inp"
+            [(ngModel)]="textMessage"
+          />
+          <button type="submit" class="search-btn" (click)="onSendMessage()">
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+    <div *ngIf="infoPage">
+      <app-chat-info></app-chat-info>
+    </div>
+    <div *ngIf="filePage">
+      <app-filepage></app-filepage>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="!channelName">
+  <div class="dummyicon">
+    <i class="fa-brands fa-rocketchat"></i>
+  </div>
+  <h1 class="vulture">Kloudchat</h1>
+</div>

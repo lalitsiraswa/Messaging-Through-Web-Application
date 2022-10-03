@@ -1,0 +1,41 @@
+<div class="container">
+  <table class="content-table">
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>User's Name</th>
+        <!-- <th>Active/Deactive</th> -->
+      </tr>
+    </thead>
+    <tbody class="list">
+      <tr *ngFor="let user of showList; let i = index" [attr.data-index]="i">
+        <td>{{ i + 1 }}</td>
+        <td>{{ user }}</td>
+        <!-- <td><mat-slide-toggle></mat-slide-toggle></td> -->
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="btn-container">
+  <div class="next-previous-btn">
+    <div class="previous-page">
+      <button
+        (click)="listContent('backward')"
+        mat-icon-button
+        aria-label="Example icon button with a vertical three dot icon"
+      >
+        <mat-icon>fast_rewind</mat-icon>
+      </button>
+    </div>
+    <div class="next-page">
+      <button
+        (click)="listContent('forward')"
+        mat-icon-button
+        aria-label="Example icon button with a vertical three dot icon"
+      >
+        <mat-icon>fast_forward</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

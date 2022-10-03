@@ -1,0 +1,173 @@
+<div class="main-container">
+  <!-- <div class="errorModule" *ngIf="message">
+    <div class="error-message">
+      <div class="errorIcon">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <div class="successMsg">{{ message }}</div>
+    </div>
+  </div> -->
+  <div class="left-component-button">
+    <i
+      (click)="switch_pages(left_component_page, right_component_page)"
+      class="fa-solid fa-arrow-left fa-xl"
+    ></i>
+    <!-- <i
+      (click)="switch_pages(left_component_page, right_component_page)"
+      class="fa-solid fa-bars fa-lg"
+    ></i> -->
+  </div>
+  <div class="left-component" #left_component_page>
+    <div class="user-info">
+      <div class="user-name-and-icon">
+        <igx-avatar
+          initials="{{ avatarName }}"
+          size="small"
+          [roundShape]="true"
+        ></igx-avatar>
+        <div class="user-name">
+          <h3>{{ userName }}</h3>
+        </div>
+      </div>
+      <div class="icons">
+        <div class="dashboard-icon" style="color: Dodgerblue" *ngIf="dashboard">
+          <i
+            matTooltip="Dashboard"
+            class="fa-solid fa-table-columns fa-lg"
+            (click)="takeMeToHandlerDashBoard()"
+          ></i>
+        </div>
+        <div class="notification-icon" style="color: Dodgerblue">
+          <!-- <i matTooltip="Notification" class="fa-solid fa-bell fa-lg fa-lg"></i> -->
+          <button
+            type="button"
+            class="icon-button"
+            style="background-color: #ecf3ff; border: none"
+            [matMenuTriggerFor]="menu"
+          >
+            <i
+              matTooltip="Notification"
+              class="fa-solid fa-bell fa-xl"
+              style="color: Dodgerblue"
+            ></i>
+
+            <!-- <i
+              class="fa fa-bell fa-border fa-xl badge"
+              style="color: dodgerblue; border: none"
+            ></i> -->
+            <span class="icon-button__badge">{{ noticount }}</span>
+          </button>
+          <!-- </a> -->
+        </div>
+        <div>
+          <mat-menu #menu="matMenu">
+            <mat-list role="list" *ngFor="let notification of notifications">
+              <mat-list-item
+                role="listitem"
+                *ngIf="notification.count"
+                (click)="
+                  selectFromNoti(
+                    notification.chatName,
+                    notification.chatName.indexOf('@') === -1 ? true : false
+                  )
+                "
+              >
+                Channel :
+                {{
+                  notification.chatName.substr(
+                    0,
+                    notification.chatName.indexOf("@") !== -1
+                      ? notification.chatName.indexOf("@")
+                      : notification.chatName.length
+                  )
+                }}, Unread : {{ notification.count }}
+              </mat-list-item>
+            </mat-list>
+          </mat-menu>
+        </div>
+        <div class="logout-icon" style="color: Dodgerblue">
+          <i
+            matTooltip="Logout"
+            class="fa-solid fa-power-off fa-lg"
+            (click)="logout()"
+          ></i>
+        </div>
+      </div>
+    </div>
+    <div>
+      <form>
+        <div class="form-holder">
+          <div class="form-input">
+            <input
+              class="search-bar"
+              type="search"
+              placeholder="Search..."
+              name="search"
+              (keyup)="onKeySearch($event)"
+              autocomplete="off"
+              (blur)="onBlur()"
+              (focus)="isFocused()"
+            />
+            <!-- <button type="submit" class="search-btn">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button> -->
+          </div>
+          <div class="searched-user" *ngIf="searchedUsers && inFocus">
+            <div
+              (click)="selectUser(user.username)"
+              class="searched-user-list"
+              *ngFor="let user of searchedUsers"
+            >
+              {{ user.username }}
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="chat-groups">
+        <button
+          class="chat-button"
+          (click)="openPrivateChat()"
+          [ngClass]="
+            'private-chat' === chat_option
+              ? 'activate-class'
+              : 'deactivate-class'
+          "
+        >
+          Chat
+        </button>
+        <button
+          class="group-button"
+          (click)="openGroupChat()"
+          [ngClass]="
+            'group-chat' === chat_option ? 'activate-class' : 'deactivate-class'
+          "
+        >
+          Groups
+        </button>
+      </div>
+    </div>
+    <div class="user-list">
+      <app-channelscomponent *ngIf="groupChat"></app-channelscomponent>
+      <app-directmessagescomponent
+        *ngIf="privateCHat"
+      ></app-directmessagescomponent>
+    </div>
+  </div>
+  <div class="right-container" #right_component_page>
+    <mat-spinner class="spinner" *ngIf="isLoading"></mat-spinner>
+
+    <!-- <app-chatpage *ngIf="!isLoading && !noDataToLoad"> </app-chatpage> -->
+    <app-chatpage
+      *ngIf="!isLoading && !noDataToLoad"
+      (noChatsToShow)="showMessage($event)"
+    >
+    </app-chatpage>
+
+    <div class="pop-up-msg" *ngIf="!isLoading && noDataToLoad">
+      <div class="msg-content">Group has been deactivated!!</div>
+    </div>
+    <!-- <h1 >
+      Group has been deactivated!!
+    </h1> -->
+  </div>
+</div>

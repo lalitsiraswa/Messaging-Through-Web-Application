@@ -1,0 +1,59 @@
+<div class="page">
+  <div class="bar errormessage" *ngIf="message">
+    <div class="close" (click)="removeErrorMessage()">X</div>
+    <i class="ico" (click)="removeErrorMessage()">&#9747;</i> {{ message }}
+  </div>
+
+  <div class="center">
+    <h4>Signup</h4>
+    <form [formGroup]="signUpFormControl" (ngSubmit)="onSubmit()">
+      <div class="txt_field">
+        <input type="text" id="name" formControlName="name" />
+        <span
+          ><small class="error" *ngIf="name?.touched && name?.invalid"
+            >Enter Valid Name</small
+          ></span
+        >
+        <label for="name">Name</label>
+      </div>
+      <div class="txt_field">
+        <input type="text" id="username" formControlName="username" />
+        <span
+          ><small class="error" *ngIf="username?.touched && username?.invalid"
+            >Enter Valid Username</small
+          ></span
+        >
+        <label for="username">Username</label>
+      </div>
+      <div class="txt_field">
+        <input type="email" id="email" formControlName="email" />
+        <span
+          ><small class="error" *ngIf="email?.touched && email?.invalid"
+            >Enter Valid Email</small
+          ></span
+        >
+        <label for="email">Email</label>
+      </div>
+
+      <div class="txt_field">
+        <input type="password" id="password" formControlName="password" />
+        <span
+          ><small class="error" *ngIf="password?.touched && password?.invalid"
+            >Enter Valid Password</small
+          ></span
+        >
+        <label for="password">Password</label>
+      </div>
+
+      <input
+        type="submit"
+        [disabled]="signUpFormControl.invalid"
+        value="Signup"
+      />
+
+      <div class="signup_link">
+        Not a member? <a [routerLink]="['../login']">Login</a>
+      </div>
+    </form>
+  </div>
+</div>

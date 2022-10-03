@@ -1,0 +1,142 @@
+<nav>
+  <div class="logo-name">
+    <span class="logo_name">Kloudconvo</span>
+  </div>
+
+  <div class="menu-items">
+    <ul class="nav-links">
+      <!-- <li>
+        <a (click)="inviteComponet()">
+          <i class="fa-solid fa-circle-plus"></i>
+          <span class="link-name">Invites</span>
+        </a>
+      </li> -->
+      <li
+        [ngClass]="
+          'channel-list' === selected_option
+            ? 'activate-class'
+            : 'deactivate-class'
+        "
+      >
+        <a (click)="channelList()">
+          <i class="fa-solid fa-hashtag"></i>
+          <span class="link-name">Channels</span>
+        </a>
+      </li>
+      <li
+        [ngClass]="
+          'users-list' === selected_option
+            ? 'activate-class'
+            : 'deactivate-class'
+        "
+      >
+        <a (click)="userComponent()">
+          <i class="fa-solid fa-user"></i>
+          <span class="link-name">Users</span>
+        </a>
+      </li>
+      <li
+        [ngClass]="
+          'handlers-list' === selected_option
+            ? 'activate-class'
+            : 'deactivate-class'
+        "
+      >
+        <a (click)="hanlderList()">
+          <i class="fa-solid fa-at"></i>
+          <span class="link-name">Hanlders</span>
+        </a>
+      </li>
+      <li
+        [ngClass]="
+          'add-user-list' === selected_option
+            ? 'activate-class'
+            : 'deactivate-class'
+        "
+      >
+        <a (click)="addUserPage()">
+          <i class="fa-solid fa-user-plus"></i>
+          <span class="link-name">Add User</span>
+        </a>
+      </li>
+      <li
+        [ngClass]="
+          'add-handlers-list' === selected_option
+            ? 'activate-class'
+            : 'deactivate-class'
+        "
+      >
+        <a (click)="addHanlderPage()">
+          <i class="fa-brands fa-hackerrank"></i>
+          <span class="link-name">Add Hanlder</span>
+        </a>
+      </li>
+      <li
+        [ngClass]="
+          'create-channel-form' === selected_option
+            ? 'activate-class'
+            : 'deactivate-class'
+        "
+      >
+        <a (click)="createChannelPage()">
+          <i class="fa-solid fa-plus"></i>
+          <span class="link-name">Create Channel</span>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="logout-mode">
+      <li>
+        <a (click)="takeMeToHomePage()">
+          <i class="fa-solid fa-message"></i>
+          <span class="link-name">Home Page</span>
+        </a>
+
+        <a (click)="logout()">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          <span class="link-name">Logout</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<section class="dashboard">
+  <div class="top">
+    <!-- <i class="fa-solid fa-bars" (click)="sidebarToggle()"></i> -->
+    <i class="fa-solid fa-bars" (click)="sidebarToggle()"></i>
+
+    <!-- 
+    <div class="search-box">
+      <i class="uil uil-search"></i>
+      <input type="text" placeholder="Search here..." />
+    </div> -->
+
+    <!-- <div class="username-logo">
+      <p class="username-name">{{ lettersOfUsername }}</p>
+    </div> -->
+
+    <igx-avatar
+      initials="{{ lettersOfUsername }}"
+      size="small"
+      [roundShape]="true"
+    ></igx-avatar>
+  </div>
+  <!-- <div class="errorModule" *ngIf="message">
+    <div class="errorIcon">
+      <i class="fa-solid fa-circle-check"></i>
+    </div>
+
+    <div class="successMsg">{{ message }}</div>
+  </div> -->
+
+  <div class="dash-content">
+    <app-channels *ngIf="channel"></app-channels>
+    <!-- <app-invites *ngIf="invite"></app-invites> -->
+    <app-users *ngIf="user"></app-users>
+    <app-adduser *ngIf="addUser"></app-adduser>
+    <app-hanlders *ngIf="hanlder"></app-hanlders>
+    <app-createhandler *ngIf="addHanlder"></app-createhandler>
+    <app-createchannel *ngIf="createChannel"></app-createchannel>
+  </div>
+</section>

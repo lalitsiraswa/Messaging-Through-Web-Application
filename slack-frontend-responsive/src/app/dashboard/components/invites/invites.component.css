@@ -1,0 +1,95 @@
+.container {
+  /* border: 2px solid red; */
+
+  margin-left: 80px;
+
+  height: auto;
+  width: 60%;
+  background: #f2f2f2;
+  border-radius: 20px;
+  box-shadow: 0 0 20px 8px #d0d0d0;
+  display: flex;
+  /* flex-direction: row; */
+  justify-content: center;
+}
+
+.content {
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  display: inline-block;
+  /* border: 2px solid green; */
+  display: flex;
+  flex-direction: column;
+  color: black;
+  font-family: "Merriweather", serif;
+}
+
+mat-icon {
+  width: auto;
+  /* margin-left: 25px; */
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* padding: 2px; */
+}
+
+.flap {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  margin-bottom: 20px;
+  /* border: 2px solid red; */
+}
+
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  width: 2em;
+  height: 2em;
+}
+
+.button-div {
+  border: 2px solid black;
+  width: 10px;
+}
+
+.inner-container {
+  display: flex;
+}
+
+::-webkit-scrollbar {
+  width: 20px;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 20px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 20px;
+  border: 9px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf;
+}
+
+@media only screen and (max-width: 600px) {
+  .container {
+    width: auto;
+  }
+}

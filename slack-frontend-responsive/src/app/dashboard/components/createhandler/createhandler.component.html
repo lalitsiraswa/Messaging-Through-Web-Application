@@ -1,0 +1,37 @@
+<div class="pages-section">
+  <div class="header">
+    <form>
+      <div class="form-holder">
+        <div class="form-input">
+          <input
+            type="search"
+            placeholder="Search..."
+            (keyup)="onKeySearch($event)"
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="list">
+    <div>
+      <mat-list>
+        <div *ngFor="let user of searchedUsers">
+          <mat-list-item (click)="addHandler(user.username)">
+            <div class="channelselector">
+              <i class="fa-solid fa-user"></i>
+
+              {{ user.username }}
+            </div>
+
+            <div class="invite-button">
+              <div>
+                <i class="fa-solid fa-plus"></i>
+              </div>
+            </div>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </div>
+      </mat-list>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+<div class="infopage">
+  <div class="pages-section">
+    <div class="header">
+      <div class="title">
+        <h4>User's of Channel</h4>
+      </div>
+    </div>
+
+    <div class="list">
+      <div>
+        <mat-list>
+          <div *ngFor="let user of usersList">
+            <mat-list-item class="users">
+              <div class="userinfo">
+                <div class="profilelogo">
+                  <p class="profile">{{ user.username[0] }}</p>
+                </div>
+                {{ user.username }}
+              </div>
+              <div
+                class="removeuser"
+                (click)="userStatus(user.username, 'remove')"
+                *ngIf="!roleOfUser"
+              >
+                <mat-icon>delete</mat-icon>
+              </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+          </div>
+        </mat-list>
+      </div>
+    </div>
+  </div>
+
+  <span class="vertical-line" *ngIf="!privateChat && !roleOfUser"></span>
+
+  <div class="pages-section" *ngIf="!privateChat && !roleOfUser">
+    <h4>Add user to {{ channelName }}</h4>
+    <div class="header">
+      <form>
+        <div class="form-holder">
+          <div class="form-input">
+            <input
+              type="search"
+              name="usersearch"
+              placeholder="Search..."
+              [(ngModel)]="searchTerm"
+              (keyup)="onKeySearch($event)"
+            />
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="list">
+      <div>
+        <mat-list>
+          <div *ngFor="let user of searchedUsers">
+            <mat-list-item id="{{ user.username }}">
+              <div class="channelselector">
+                <i class="fa-solid fa-user"></i>
+                {{ user.username }}
+              </div>
+              <div
+                class="invite-button"
+                (click)="userStatus(user.username, 'add')"
+              >
+                <button mat-button>
+                  <i matTooltip="Add user" class="fa-solid fa-plus"></i>
+                </button>
+              </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+          </div>
+        </mat-list>
+      </div>
+    </div>
+  </div>
+</div>
